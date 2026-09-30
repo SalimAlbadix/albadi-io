@@ -27,7 +27,7 @@ window.ALBADI = {
     { name: 'YouTube', url: 'https://www.youtube.com/@albadiio' },
     { name: 'X', url: 'https://x.com/albadiio' },
   ],
-  email: 'ceo@albadi.io',
+  supportEmail: 'support@albadi.io',   // the floating Support button emails this address
 
   countries: [
     { code: 'om', flag: '🇴🇲', name: { en: 'Oman', ar: 'عُمان' } },

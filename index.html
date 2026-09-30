@@ -219,6 +219,16 @@ html[lang="ar"] .badge { font: 700 12px/1 var(--f-ar); padding-top: 6px; }
 html[lang="ar"] .fine { font-family: var(--f-ar); font-size: 13px; }
 .fine .mail { color: var(--ink-2); user-select: all; direction: ltr; unicode-bidi: isolate; }
 
+/* ---------- support button ---------- */
+.support-fab { position: fixed; z-index: 35; inset-inline-end: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; min-width: 52px; padding-inline: 15px; border-radius: 999px; background: var(--pill); color: var(--pill-ink); font-size: 14.5px; font-weight: 700; text-decoration: none; box-shadow: 0 12px 32px rgba(0, 0, 0, .2), 0 2px 6px rgba(0, 0, 0, .12); transition: transform .3s var(--ease-out), opacity .3s var(--ease-out); -webkit-tap-highlight-color: transparent; }
+.support-fab:active { transform: scale(.93); }
+@media (hover: hover) { .support-fab:hover { transform: translateY(-2px); } }
+.support-label { display: none; }
+@media (min-width: 720px) { .support-label { display: inline; } .support-fab { padding-inline: 16px 20px; } }
+html.locked .support-fab, html.sheet-open .support-fab { opacity: 0; pointer-events: none; transform: scale(.8); }
+@media (prefers-reduced-motion: no-preference) { html.intro .support-fab { animation: rise .7s var(--ease-out) .9s both; } }
+.foot { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+
 /* ---------- product sheet ---------- */
 .scrim { position: fixed; inset: 0; z-index: 40; background: var(--scrim); -webkit-tap-highlight-color: transparent; }
 .sheet { position: fixed; z-index: 50; left: 0; right: 0; bottom: 0; top: calc(env(safe-area-inset-top, 0px) + 16px); display: flex; flex-direction: column; background: var(--sheet); border-radius: var(--r-sheet) var(--r-sheet) 0 0; overflow: hidden; box-shadow: 0 -10px 40px rgba(0, 0, 0, .18); will-change: transform; --pad: 20px; outline: none; }
@@ -318,7 +328,7 @@ html[dir="rtl"] .flip-rtl { transform: scaleX(-1); }
 html[lang="ar"] .picker-card h2 { font-weight: 700; }
 .picker-card p { margin: 8px 8px 0; color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
 .c-list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 4px; }
-.c-opt { width: 100%; display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 10px 12px; border: 0; border-radius: 16px; background: transparent; color: var(--ink); font-size: 16px; font-weight: 650; text-align: start; cursor: pointer; transition: background-color .2s; -webkit-tap-highlight-color: transparent; }
+.c-opt { width: 100%; display: flex; text-decoration: none; align-items: center; gap: 14px; min-height: 56px; padding: 10px 12px; border: 0; border-radius: 16px; background: transparent; color: var(--ink); font-size: 16px; font-weight: 650; text-align: start; cursor: pointer; transition: background-color .2s; -webkit-tap-highlight-color: transparent; }
 @media (hover: hover) { .c-opt:hover { background: var(--soft); } }
 .c-opt .flag { font-size: 26px; line-height: 1; }
 .c-opt .cd { margin-inline-start: auto; font: 500 12px/1 var(--f-mono); color: var(--ink-3); letter-spacing: .06em; text-transform: uppercase; }
@@ -330,6 +340,15 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
   .picker-card { width: 440px; border-radius: 26px; padding: 28px 16px 16px; box-shadow: 0 40px 120px -30px rgba(0, 0, 0, .5), 0 0 0 1px var(--line); }
   .picker-card .sheet-grab { display: none; }
 }
+
+.share-head { display: flex; align-items: center; gap: 14px; margin: 0 8px; min-width: 0; }
+.share-head .stage { width: 64px; flex: none; border-radius: 16px; }
+.share-head .stage img { width: 88%; height: 88%; }
+.share-head > div { min-width: 0; }
+.picker-card .share-head h2 { margin: 0; font-size: 18px; line-height: 1.25; }
+.picker-card .share-url { margin: 4px 0 0; color: var(--ink-3); font: 500 12.5px/1.35 var(--f-mono); overflow-wrap: anywhere; }
+.c-opt .si { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border-radius: 12px; background: var(--soft); color: var(--ink); }
+.c-opt .go { margin-inline-start: auto; color: var(--ink-3); }
 
 /* ---------- toast ---------- */
 .toast { position: fixed; left: 50%; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); z-index: 90; padding: 12px 18px; border-radius: 999px; background: var(--pill); color: var(--pill-ink); font-size: 14px; font-weight: 650; white-space: nowrap; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; transition: opacity .25s, transform .4s var(--ease-out); box-shadow: 0 10px 30px rgba(0, 0, 0, .2); }
@@ -380,15 +399,19 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
       <div class="foot-top">
         <div>
           <span class="brand" aria-label="albadi.io">albadi<i>.</i><span>io</span></span>
-          <p class="foot-tag" id="footTag">Chosen by Salim Al Badi for shoppers across the Gulf.</p>
         </div>
         <nav class="socials" id="socials" aria-label="Social"><!--SOCIALS:START--><a href="https://www.instagram.com/albadi.io" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@albadi.io" target="_blank" rel="noopener">TikTok</a><a href="https://www.youtube.com/@albadiio" target="_blank" rel="noopener">YouTube</a><a href="https://x.com/albadiio" target="_blank" rel="noopener">X</a><!--SOCIALS:END--></nav>
       </div>
       <p class="disclose" id="disclose">Links on this site are affiliate links. When you buy through them, Albadi Media may earn a commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. Prices and availability are set by each store.</p>
-      <p class="fine"><span id="copy">© 2026 Albadi Media</span><span><span id="collabs">Brand collabs</span> <span class="mail" id="mail"></span></span></p>
+      <p class="fine"><span id="copy">© 2026 Albadi Media</span></p>
     </div>
   </footer>
 </div>
+
+<!--email_off--><a class="support-fab" id="supportFab" href="mailto:support@albadi.io?subject=albadi.io" aria-label="Email support">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="4.2" width="14.8" height="11.6" rx="3"/><path d="m3.4 5.6 6.6 5 6.6-5"/></svg>
+  <span class="support-label" id="supportLabel">Support</span>
+</a><!--/email_off-->
 
 <div class="scrim" id="scrim" hidden></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="pName" tabindex="-1" hidden>
@@ -440,9 +463,21 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
   </div>
 </div>
 
+<div class="picker" id="shareSheet" role="dialog" aria-modal="true" aria-labelledby="shareName" hidden>
+  <div class="picker-bg"></div>
+  <div class="picker-card">
+    <div class="sheet-grab" aria-hidden="true"><span></span></div>
+    <div class="share-head">
+      <span class="stage"><img id="shareImg" alt="" decoding="async"></span>
+      <div><h2 id="shareName"></h2><p class="share-url" dir="ltr" id="shareUrl"></p></div>
+    </div>
+    <ul class="c-list" id="shareList"></ul>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<!--DATA:START--><!--email_off--><script>window.ALBADI_INLINE = {"siteUrl":"https://albadi.io","affiliateTags":{"amazon.ae":"","amazon.sa":""},"socials":[{"name":"Instagram","url":"https://www.instagram.com/albadi.io"},{"name":"TikTok","url":"https://www.tiktok.com/\u0040albadi.io"},{"name":"YouTube","url":"https://www.youtube.com/\u0040albadiio"},{"name":"X","url":"https://x.com/albadiio"}],"email":"ceo\u0040albadi.io","countries":[{"code":"om","flag":"🇴🇲","name":{"en":"Oman","ar":"عُمان"}},{"code":"sa","flag":"🇸🇦","name":{"en":"Saudi Arabia","ar":"السعودية"}},{"code":"ae","flag":"🇦🇪","name":{"en":"UAE","ar":"الإمارات"}},{"code":"kw","flag":"🇰🇼","name":{"en":"Kuwait","ar":"الكويت"}},{"code":"qa","flag":"🇶🇦","name":{"en":"Qatar","ar":"قطر"}},{"code":"bh","flag":"🇧🇭","name":{"en":"Bahrain","ar":"البحرين"}}],"categories":[{"id":"chargers","name":{"en":"Chargers","ar":"الشواحن"}},{"id":"power-banks","name":{"en":"Power Banks","ar":"باور بانك"}},{"id":"cables","name":{"en":"Cables","ar":"الكابلات"}},{"id":"phones","name":{"en":"Phones","ar":"الهواتف"}},{"id":"audio","name":{"en":"Audio","ar":"السماعات"}}],"products":[{"id":"iphone-18-pro","category":"phones","brand":"Apple","name":"iPhone 18 Pro","isNew":true,"featured":true,"highlight":"A20 Pro · 48MP · ƒ/1.48–ƒ/4","tagline":{"en":"The first iPhone camera with a variable aperture.","ar":"أول كاميرا آيفون بفتحة عدسة متغيّرة."},"take":{"en":"The new 48MP main camera has real aperture blades, from ƒ/1.48 for low light to ƒ/4 for sharp group shots. In the GCC it ships as an eSIM-only model, which frees space for a bigger battery with up to 36 hours of video playback.","ar":"الكاميرا الرئيسية الجديدة بدقة 48 ميغابكسل فيها شفرات فتحة حقيقية، من ƒ/1.48 للإضاءة المنخفضة إلى ƒ/4 لصور جماعية أوضح. وفي دول الخليج يأتي بنسخة eSIM فقط، وهذا يترك مساحة لبطارية أكبر تصل إلى 36 ساعة تشغيل فيديو."},"specs":[{"label":{"en":"Chip","ar":"المعالج"},"value":{"en":"A20 Pro · 2nm","ar":"A20 Pro · ‏2 نانومتر"}},{"label":{"en":"Main camera","ar":"الكاميرا الرئيسية"},"value":{"en":"48MP · ƒ/1.48–ƒ/4","ar":"48 ميغابكسل · ƒ/1.48–ƒ/4"}},{"label":{"en":"Battery","ar":"البطارية"},"value":{"en":"Up to 36 hrs video (eSIM)","ar":"حتى 36 ساعة فيديو (eSIM)"}},{"label":{"en":"Fast charge","ar":"الشحن السريع"},"value":{"en":"50% in ~15 min wired","ar":"50% في 15 دقيقة تقريباً"}},{"label":{"en":"Wireless","ar":"اللاسلكي"},"value":{"en":"Wi-Fi 7 · Bluetooth 6","ar":"Wi-Fi 7 · بلوتوث 6"}},{"label":{"en":"Storage","ar":"السعة"},"value":"256GB – 2TB"},{"label":{"en":"Colors","ar":"الألوان"},"value":{"en":"Black, Silver, Glacier, Burgundy","ar":"أسود، فضي، جليدي، عنابي"}},{"label":{"en":"US launch price","ar":"سعر الإطلاق (أمريكا)"},"value":"from $1,199"}],"images":["images/iphone-18-pro-1.webp","images/iphone-18-pro-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=iPhone+18+Pro"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"}}},{"id":"anker-prime-160w","category":"chargers","brand":"Anker","name":"Anker Prime Charger 160W","highlight":"160W · 3× USB-C","tagline":{"en":"One charger for your laptop, phone and earbuds.","ar":"شاحن واحد للابتوب والجوال والسماعات."},"take":{"en":"Each of the three USB-C ports can deliver up to 140W on its own, enough for a 16-inch MacBook Pro, and the built-in screen shows exactly how much power every device is pulling. It replaces the pile of chargers in your bag.","ar":"كل منفذ من المنافذ الثلاثة يعطي حتى 140 واط لوحده، وهذا يكفي لماك بوك برو 16 إنش، والشاشة المدمجة توضح لك كم واط يسحب كل جهاز. شاحن واحد يغنيك عن كومة الشواحن في حقيبتك."},"specs":[{"label":{"en":"Total output","ar":"القدرة الإجمالية"},"value":"160W"},{"label":{"en":"Per port","ar":"لكل منفذ"},"value":{"en":"Up to 140W","ar":"حتى 140W"}},{"label":{"en":"Ports","ar":"المنافذ"},"value":"3× USB-C"},{"label":{"en":"Standard","ar":"المعيار"},"value":"USB PD 3.1"},{"label":{"en":"Display","ar":"الشاشة"},"value":{"en":"1.3\" smart display","ar":"شاشة ذكية 1.3 إنش"}},{"label":{"en":"App","ar":"التطبيق"},"value":{"en":"Anker app over Bluetooth","ar":"تطبيق Anker عبر البلوتوث"}},{"label":{"en":"Award","ar":"الجوائز"},"value":{"en":"CES 2026 Innovation Honoree","ar":"مكرّم في جوائز CES 2026 للابتكار"}},{"label":{"en":"US launch price","ar":"سعر الإطلاق (أمريكا)"},"value":"$149"}],"images":["images/anker-prime-160w-1.webp","images/anker-prime-160w-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=Anker+Prime+Charger+160W"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"}}},{"id":"ugreen-nexode-10k","category":"power-banks","brand":"UGREEN","name":"UGREEN Nexode Power Bank 10,000mAh","isNew":true,"highlight":"10,000 mAh · 45W","tagline":{"en":"A pocket power bank with a built-in cable and a live display.","ar":"باور بانك بحجم الجيب، بكابل مدمج وشاشة تعرض كل التفاصيل."},"take":{"en":"At 45W, UGREEN rates it at 66% for an iPhone 17 Pro Max in 30 minutes. The built-in USB-C cable doubles as a carry loop, so you never leave the cable at home, and the screen shows output, battery temperature and battery health.","ar":"بقوة 45 واط، تقول UGREEN إنه يشحن آيفون 17 برو ماكس إلى 66% خلال 30 دقيقة. والكابل المدمج يعمل كعلّاقة للحمل فلا تنساه في البيت، والشاشة تعرض قوة الشحن وحرارة البطارية وصحتها."},"specs":[{"label":{"en":"Capacity","ar":"السعة"},"value":"10,000 mAh"},{"label":{"en":"Max output","ar":"أقصى قدرة"},"value":"45W"},{"label":{"en":"Ports","ar":"المنافذ"},"value":{"en":"Built-in USB-C + USB-C + USB-A","ar":"كابل USB-C مدمج + USB-C + USB-A"}},{"label":{"en":"Charges","ar":"يشحن"},"value":{"en":"3 devices at once","ar":"3 أجهزة في نفس الوقت"}},{"label":{"en":"Cells","ar":"الخلايا"},"value":{"en":"ATL · 140°C hot-box tested","ar":"ATL · مختبرة حرارياً حتى 140°C"}},{"label":{"en":"Weight","ar":"الوزن"},"value":"200 g"},{"label":{"en":"Size","ar":"المقاس"},"value":"108 × 69 × 18 mm"},{"label":{"en":"US price","ar":"السعر (أمريكا)"},"value":"$79.99"}],"images":["images/ugreen-nexode-10k-1.webp","images/ugreen-nexode-10k-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"}}},{"id":"ugreen-240w-cable","category":"cables","brand":"UGREEN","name":"UGREEN Nexode 240W USB-C Cable with Display","highlight":"240W · PD 3.1","tagline":{"en":"A cable that shows you how fast it is charging.","ar":"كابل يعرض لك سرعة الشحن الحقيقية."},"take":{"en":"USB-C cables all look the same, so you never know which one is slowing you down. This one has a small screen on the connector that shows the watts, volts and amps flowing through it, and it handles up to 240W, so it charges everything from earbuds to a gaming laptop.","ar":"كل كابلات USB-C تبدو متشابهة، ولا تعرف أيّها يبطّئ الشحن. هذا الكابل فيه شاشة صغيرة على الرأس تعرض الواط والفولت والأمبير أثناء الشحن، ويتحمل حتى 240 واط، فيشحن كل شيء من السماعات إلى لابتوبات الألعاب."},"specs":[{"label":{"en":"Max power","ar":"أقصى قدرة"},"value":"240W (48V / 5A)"},{"label":{"en":"Standard","ar":"المعيار"},"value":"USB PD 3.1 · E-Marker"},{"label":{"en":"Display","ar":"الشاشة"},"value":{"en":"Touch display on the connector","ar":"شاشة لمس على رأس الكابل"}},{"label":{"en":"Data","ar":"نقل البيانات"},"value":{"en":"USB 2.0 · 480 Mbps (no video)","ar":"USB 2.0 · ‏480Mbps (بدون فيديو)"}},{"label":{"en":"Build","ar":"الخامة"},"value":{"en":"Nylon braid · aluminum","ar":"نايلون مجدول · ألمنيوم"}},{"label":{"en":"Lengths","ar":"الأطوال"},"value":{"en":"1 m · 2 m","ar":"1 م · 2 م"}},{"label":{"en":"Durability","ar":"التحمل"},"value":{"en":"10,000+ plug cycles","ar":"أكثر من 10,000 توصيلة"}},{"label":{"en":"US price","ar":"السعر (أمريكا)"},"value":{"en":"from $16.99","ar":"من $16.99"}}],"images":["images/ugreen-240w-cable-1.webp","images/ugreen-240w-cable-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=UGREEN+240W+USB+C+cable+display"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"}}},{"id":"airpods-pro-3","category":"audio","brand":"Apple","name":"AirPods Pro 3","highlight":"ANC 2× · IP57","tagline":{"en":"Apple's strongest noise cancelling, now with heart-rate sensing.","ar":"أقوى عزل للضوضاء من Apple، مع قياس نبض القلب."},"take":{"en":"Apple rates the noise cancelling at up to 2× the AirPods Pro 2, and the new foam-infused tips come in five sizes, including XXS, so they fit more ears. They also track your heart rate during workouts and are IP57 rated for sweat and rain.","ar":"تقول Apple إن عزل الضوضاء أقوى حتى الضعف مقارنة بـ AirPods Pro 2، والأطراف الجديدة المحشوة بالفوم متوفرة بخمسة مقاسات منها XXS لتناسب آذاناً أكثر. وتقيس نبض قلبك أثناء التمرين، ومقاومة للعرق والمطر بمعيار IP57."},"specs":[{"label":{"en":"Noise cancelling","ar":"عزل الضوضاء"},"value":{"en":"Up to 2× AirPods Pro 2","ar":"حتى ضعف AirPods Pro 2"}},{"label":{"en":"Battery","ar":"البطارية"},"value":{"en":"Up to 8 hrs with ANC","ar":"حتى 8 ساعات مع العزل"}},{"label":{"en":"Health","ar":"الصحة"},"value":{"en":"Heart rate in workouts","ar":"قياس النبض أثناء التمارين"}},{"label":{"en":"Rating","ar":"المقاومة"},"value":{"en":"IP57 sweat & water","ar":"IP57 للعرق والماء"}},{"label":{"en":"Ear tips","ar":"الأطراف"},"value":{"en":"5 sizes, incl. XXS","ar":"5 مقاسات منها XXS"}},{"label":{"en":"Translation","ar":"الترجمة"},"value":{"en":"Live Translation (select languages)","ar":"ترجمة فورية (لغات محددة)"}},{"label":{"en":"US launch price","ar":"سعر الإطلاق (أمريكا)"},"value":"$249"}],"images":["images/airpods-pro-3-1.webp","images/airpods-pro-3-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=AirPods+Pro+3"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"}}}]};</script><!--/email_off--><!--DATA:END-->
+<!--DATA:START--><!--email_off--><script>window.ALBADI_INLINE = {"siteUrl":"https://albadi.io","affiliateTags":{"amazon.ae":"","amazon.sa":""},"socials":[{"name":"Instagram","url":"https://www.instagram.com/albadi.io"},{"name":"TikTok","url":"https://www.tiktok.com/\u0040albadi.io"},{"name":"YouTube","url":"https://www.youtube.com/\u0040albadiio"},{"name":"X","url":"https://x.com/albadiio"}],"supportEmail":"support\u0040albadi.io","countries":[{"code":"om","flag":"🇴🇲","name":{"en":"Oman","ar":"عُمان"}},{"code":"sa","flag":"🇸🇦","name":{"en":"Saudi Arabia","ar":"السعودية"}},{"code":"ae","flag":"🇦🇪","name":{"en":"UAE","ar":"الإمارات"}},{"code":"kw","flag":"🇰🇼","name":{"en":"Kuwait","ar":"الكويت"}},{"code":"qa","flag":"🇶🇦","name":{"en":"Qatar","ar":"قطر"}},{"code":"bh","flag":"🇧🇭","name":{"en":"Bahrain","ar":"البحرين"}}],"categories":[{"id":"chargers","name":{"en":"Chargers","ar":"الشواحن"}},{"id":"power-banks","name":{"en":"Power Banks","ar":"باور بانك"}},{"id":"cables","name":{"en":"Cables","ar":"الكابلات"}},{"id":"phones","name":{"en":"Phones","ar":"الهواتف"}},{"id":"audio","name":{"en":"Audio","ar":"السماعات"}}],"products":[{"id":"iphone-18-pro","category":"phones","brand":"Apple","name":"iPhone 18 Pro","isNew":true,"featured":true,"highlight":"A20 Pro · 48MP · ƒ/1.48–ƒ/4","tagline":{"en":"The first iPhone camera with a variable aperture.","ar":"أول كاميرا آيفون بفتحة عدسة متغيّرة."},"take":{"en":"The new 48MP main camera has real aperture blades, from ƒ/1.48 for low light to ƒ/4 for sharp group shots. In the GCC it ships as an eSIM-only model, which frees space for a bigger battery with up to 36 hours of video playback.","ar":"الكاميرا الرئيسية الجديدة بدقة 48 ميغابكسل فيها شفرات فتحة حقيقية، من ƒ/1.48 للإضاءة المنخفضة إلى ƒ/4 لصور جماعية أوضح. وفي دول الخليج يأتي بنسخة eSIM فقط، وهذا يترك مساحة لبطارية أكبر تصل إلى 36 ساعة تشغيل فيديو."},"specs":[{"label":{"en":"Chip","ar":"المعالج"},"value":{"en":"A20 Pro · 2nm","ar":"A20 Pro · ‏2 نانومتر"}},{"label":{"en":"Main camera","ar":"الكاميرا الرئيسية"},"value":{"en":"48MP · ƒ/1.48–ƒ/4","ar":"48 ميغابكسل · ƒ/1.48–ƒ/4"}},{"label":{"en":"Battery","ar":"البطارية"},"value":{"en":"Up to 36 hrs video (eSIM)","ar":"حتى 36 ساعة فيديو (eSIM)"}},{"label":{"en":"Fast charge","ar":"الشحن السريع"},"value":{"en":"50% in ~15 min wired","ar":"50% في 15 دقيقة تقريباً"}},{"label":{"en":"Wireless","ar":"اللاسلكي"},"value":{"en":"Wi-Fi 7 · Bluetooth 6","ar":"Wi-Fi 7 · بلوتوث 6"}},{"label":{"en":"Storage","ar":"السعة"},"value":"256GB – 2TB"},{"label":{"en":"Colors","ar":"الألوان"},"value":{"en":"Black, Silver, Glacier, Burgundy","ar":"أسود، فضي، جليدي، عنابي"}},{"label":{"en":"US launch price","ar":"سعر الإطلاق (أمريكا)"},"value":"from $1,199"}],"images":["images/iphone-18-pro-1.webp","images/iphone-18-pro-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=iPhone+18+Pro"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=iPhone+18+Pro"}}},{"id":"anker-prime-160w","category":"chargers","brand":"Anker","name":"Anker Prime Charger 160W","highlight":"160W · 3× USB-C","tagline":{"en":"One charger for your laptop, phone and earbuds.","ar":"شاحن واحد للابتوب والجوال والسماعات."},"take":{"en":"Each of the three USB-C ports can deliver up to 140W on its own, enough for a 16-inch MacBook Pro, and the built-in screen shows exactly how much power every device is pulling. It replaces the pile of chargers in your bag.","ar":"كل منفذ من المنافذ الثلاثة يعطي حتى 140 واط لوحده، وهذا يكفي لماك بوك برو 16 إنش، والشاشة المدمجة توضح لك كم واط يسحب كل جهاز. شاحن واحد يغنيك عن كومة الشواحن في حقيبتك."},"specs":[{"label":{"en":"Total output","ar":"القدرة الإجمالية"},"value":"160W"},{"label":{"en":"Per port","ar":"لكل منفذ"},"value":{"en":"Up to 140W","ar":"حتى 140W"}},{"label":{"en":"Ports","ar":"المنافذ"},"value":"3× USB-C"},{"label":{"en":"Standard","ar":"المعيار"},"value":"USB PD 3.1"},{"label":{"en":"Display","ar":"الشاشة"},"value":{"en":"1.3\" smart display","ar":"شاشة ذكية 1.3 إنش"}},{"label":{"en":"App","ar":"التطبيق"},"value":{"en":"Anker app over Bluetooth","ar":"تطبيق Anker عبر البلوتوث"}},{"label":{"en":"Award","ar":"الجوائز"},"value":{"en":"CES 2026 Innovation Honoree","ar":"مكرّم في جوائز CES 2026 للابتكار"}},{"label":{"en":"US launch price","ar":"سعر الإطلاق (أمريكا)"},"value":"$149"}],"images":["images/anker-prime-160w-1.webp","images/anker-prime-160w-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=Anker+Prime+Charger+160W"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=Anker+Prime+Charger+160W"}}},{"id":"ugreen-nexode-10k","category":"power-banks","brand":"UGREEN","name":"UGREEN Nexode Power Bank 10,000mAh","isNew":true,"highlight":"10,000 mAh · 45W","tagline":{"en":"A pocket power bank with a built-in cable and a live display.","ar":"باور بانك بحجم الجيب، بكابل مدمج وشاشة تعرض كل التفاصيل."},"take":{"en":"At 45W, UGREEN rates it at 66% for an iPhone 17 Pro Max in 30 minutes. The built-in USB-C cable doubles as a carry loop, so you never leave the cable at home, and the screen shows output, battery temperature and battery health.","ar":"بقوة 45 واط، تقول UGREEN إنه يشحن آيفون 17 برو ماكس إلى 66% خلال 30 دقيقة. والكابل المدمج يعمل كعلّاقة للحمل فلا تنساه في البيت، والشاشة تعرض قوة الشحن وحرارة البطارية وصحتها."},"specs":[{"label":{"en":"Capacity","ar":"السعة"},"value":"10,000 mAh"},{"label":{"en":"Max output","ar":"أقصى قدرة"},"value":"45W"},{"label":{"en":"Ports","ar":"المنافذ"},"value":{"en":"Built-in USB-C + USB-C + USB-A","ar":"كابل USB-C مدمج + USB-C + USB-A"}},{"label":{"en":"Charges","ar":"يشحن"},"value":{"en":"3 devices at once","ar":"3 أجهزة في نفس الوقت"}},{"label":{"en":"Cells","ar":"الخلايا"},"value":{"en":"ATL · 140°C hot-box tested","ar":"ATL · مختبرة حرارياً حتى 140°C"}},{"label":{"en":"Weight","ar":"الوزن"},"value":"200 g"},{"label":{"en":"Size","ar":"المقاس"},"value":"108 × 69 × 18 mm"},{"label":{"en":"US price","ar":"السعر (أمريكا)"},"value":"$79.99"}],"images":["images/ugreen-nexode-10k-1.webp","images/ugreen-nexode-10k-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+Nexode+Power+Bank+10000mAh+45W"}}},{"id":"ugreen-240w-cable","category":"cables","brand":"UGREEN","name":"UGREEN Nexode 240W USB-C Cable with Display","highlight":"240W · PD 3.1","tagline":{"en":"A cable that shows you how fast it is charging.","ar":"كابل يعرض لك سرعة الشحن الحقيقية."},"take":{"en":"USB-C cables all look the same, so you never know which one is slowing you down. This one has a small screen on the connector that shows the watts, volts and amps flowing through it, and it handles up to 240W, so it charges everything from earbuds to a gaming laptop.","ar":"كل كابلات USB-C تبدو متشابهة، ولا تعرف أيّها يبطّئ الشحن. هذا الكابل فيه شاشة صغيرة على الرأس تعرض الواط والفولت والأمبير أثناء الشحن، ويتحمل حتى 240 واط، فيشحن كل شيء من السماعات إلى لابتوبات الألعاب."},"specs":[{"label":{"en":"Max power","ar":"أقصى قدرة"},"value":"240W (48V / 5A)"},{"label":{"en":"Standard","ar":"المعيار"},"value":"USB PD 3.1 · E-Marker"},{"label":{"en":"Display","ar":"الشاشة"},"value":{"en":"Touch display on the connector","ar":"شاشة لمس على رأس الكابل"}},{"label":{"en":"Data","ar":"نقل البيانات"},"value":{"en":"USB 2.0 · 480 Mbps (no video)","ar":"USB 2.0 · ‏480Mbps (بدون فيديو)"}},{"label":{"en":"Build","ar":"الخامة"},"value":{"en":"Nylon braid · aluminum","ar":"نايلون مجدول · ألمنيوم"}},{"label":{"en":"Lengths","ar":"الأطوال"},"value":{"en":"1 m · 2 m","ar":"1 م · 2 م"}},{"label":{"en":"Durability","ar":"التحمل"},"value":{"en":"10,000+ plug cycles","ar":"أكثر من 10,000 توصيلة"}},{"label":{"en":"US price","ar":"السعر (أمريكا)"},"value":{"en":"from $16.99","ar":"من $16.99"}}],"images":["images/ugreen-240w-cable-1.webp","images/ugreen-240w-cable-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=UGREEN+240W+USB+C+cable+display"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=UGREEN+240W+USB+C+cable+display"}}},{"id":"airpods-pro-3","category":"audio","brand":"Apple","name":"AirPods Pro 3","highlight":"ANC 2× · IP57","tagline":{"en":"Apple's strongest noise cancelling, now with heart-rate sensing.","ar":"أقوى عزل للضوضاء من Apple، مع قياس نبض القلب."},"take":{"en":"Apple rates the noise cancelling at up to 2× the AirPods Pro 2, and the new foam-infused tips come in five sizes, including XXS, so they fit more ears. They also track your heart rate during workouts and are IP57 rated for sweat and rain.","ar":"تقول Apple إن عزل الضوضاء أقوى حتى الضعف مقارنة بـ AirPods Pro 2، والأطراف الجديدة المحشوة بالفوم متوفرة بخمسة مقاسات منها XXS لتناسب آذاناً أكثر. وتقيس نبض قلبك أثناء التمرين، ومقاومة للعرق والمطر بمعيار IP57."},"specs":[{"label":{"en":"Noise cancelling","ar":"عزل الضوضاء"},"value":{"en":"Up to 2× AirPods Pro 2","ar":"حتى ضعف AirPods Pro 2"}},{"label":{"en":"Battery","ar":"البطارية"},"value":{"en":"Up to 8 hrs with ANC","ar":"حتى 8 ساعات مع العزل"}},{"label":{"en":"Health","ar":"الصحة"},"value":{"en":"Heart rate in workouts","ar":"قياس النبض أثناء التمارين"}},{"label":{"en":"Rating","ar":"المقاومة"},"value":{"en":"IP57 sweat & water","ar":"IP57 للعرق والماء"}},{"label":{"en":"Ear tips","ar":"الأطراف"},"value":{"en":"5 sizes, incl. XXS","ar":"5 مقاسات منها XXS"}},{"label":{"en":"Translation","ar":"الترجمة"},"value":{"en":"Live Translation (select languages)","ar":"ترجمة فورية (لغات محددة)"}},{"label":{"en":"US launch price","ar":"سعر الإطلاق (أمريكا)"},"value":"$249"}],"images":["images/airpods-pro-3-1.webp","images/airpods-pro-3-2.webp"],"links":{"om":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"},"sa":{"store":"Amazon.sa","url":"https://www.amazon.sa/s?k=AirPods+Pro+3"},"ae":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"},"kw":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"},"qa":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"},"bh":{"store":"Amazon.ae","url":"https://www.amazon.ae/s?k=AirPods+Pro+3"}}}]};</script><!--/email_off--><!--DATA:END-->
 <script src="products.js"></script>
 <script>
 (() => {
@@ -499,7 +534,7 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
       note: 'Affiliate links. Buying through them supports Albadi at no extra cost to you.',
       footTag: 'Chosen by Salim Al Badi for shoppers across the Gulf.', collabs: 'Brand collabs',
       disclose: 'Links on this site are affiliate links. When you buy through them, Albadi Media may earn a commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. Prices and availability are set by each store.',
-      copy: '© ' + new Date().getFullYear() + ' Albadi Media', langTo: 'العربية', gcc: 'GCC', dark: 'Dark mode', light: 'Light mode',
+      copy: '© ' + new Date().getFullYear() + ' Albadi Media', langTo: 'العربية', gcc: 'GCC', dark: 'Dark mode', light: 'Light mode', messages: 'Messages', copyLink: 'Copy link', support: 'Support', supportAria: 'Email support',
     },
     ar: {
       eyebrow: 'اختيارات سالم البادي', title: 'أجهزة أستخدمها فعلاً', lede: 'شواحن وباور بانك وأجهزة مختارة بعناية، ولكل منها رابط المتجر المناسب لدولتك.',
@@ -510,7 +545,7 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
       note: 'روابط تسويق بالعمولة. شراؤك من خلالها يدعم البادي دون أي تكلفة إضافية عليك.',
       footTag: 'اختارها سالم البادي للمتسوقين في دول الخليج.', collabs: 'للتعاون التجاري',
       disclose: 'الروابط في هذا الموقع روابط تسويق بالعمولة. عند الشراء من خلالها قد تحصل Albadi Media على عمولة دون أي تكلفة إضافية عليك. بصفتي شريكاً في برنامج Amazon Associates أحصل على عمولة من عمليات الشراء المؤهلة. الأسعار والتوفر يحددها كل متجر.',
-      copy: '© ' + new Date().getFullYear() + ' Albadi Media', langTo: 'English', gcc: 'الخليج', dark: 'الوضع الداكن', light: 'الوضع الفاتح',
+      copy: '© ' + new Date().getFullYear() + ' Albadi Media', langTo: 'English', gcc: 'الخليج', dark: 'الوضع الداكن', light: 'الوضع الفاتح', messages: 'الرسائل', copyLink: 'نسخ الرابط', support: 'الدعم', supportAria: 'راسل الدعم',
     },
   };
 
@@ -565,11 +600,12 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
     lb.dataset.to = state.lang === 'ar' ? 'en' : 'ar';
     lb.setAttribute('aria-label', T('langTo'));
     lb.lang = state.lang === 'ar' ? 'en' : 'ar';
-    $('#footTag').textContent = T('footTag');
     $('#disclose').textContent = T('disclose');
     $('#copy').textContent = T('copy');
-    $('#collabs').textContent = T('collabs');
-    $('#mail').textContent = DATA.email || '';
+    const fab = $('#supportFab');
+    if (DATA.supportEmail) fab.href = 'mailto:' + DATA.supportEmail + '?subject=' + encodeURIComponent('albadi.io');
+    fab.setAttribute('aria-label', T('supportAria'));
+    $('#supportLabel').textContent = T('support');
     $('#socials').innerHTML = (DATA.socials || []).map(s => '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.name) + '</a>').join('');
     $('#shareBtn').setAttribute('aria-label', T('share'));
     $('#closeBtn').setAttribute('aria-label', T('close'));
@@ -1032,29 +1068,31 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
   function renderPicker() {
     $('#cList').innerHTML = (DATA.countries || []).map(c => '<li role="none"><button type="button" class="c-opt" role="option" data-code="' + c.code + '" aria-selected="' + (c.code === state.country) + '"><span class="flag" aria-hidden="true">' + c.flag + '</span><span>' + esc(L(c.name)) + '</span><span class="cd">' + c.code + '</span><span class="ck" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span></button></li>').join('');
   }
-  let pickerReturn = null;
-  function openPicker() {
-    renderPicker();
-    pickerReturn = document.activeElement;
-    picker.hidden = false;
+  let modalReturn = null;
+  function modalOpen(box, focusSel) {
+    modalReturn = document.activeElement;
+    box.hidden = false;
     if (!state.open) lockScroll();
-    const wide = mqWide.matches, card = $('#pickerCard'), bg = $('#pickerBg');
+    const wide = mqWide.matches, card = $('.picker-card', box), bg = $('.picker-bg', box);
     if (!reduce.matches) {
       animateTo(bg, 'o', [{ opacity: 0 }, { opacity: 1 }], { duration: 260 });
       animateTo(card, 's', wide ? [{ opacity: 0, transform: 'scale(.96)' }, { opacity: 1, transform: 'none' }] : [{ transform: 'translateY(100%)' }, { transform: 'translateY(0px)' }], { duration: SP.sheet.duration, easing: SP.sheet.easing });
     }
-    const sel = $('.c-opt[aria-selected="true"]') || $('.c-opt');
-    setTimeout(() => sel && sel.focus({ preventScroll: true }), 60);
+    const f = (focusSel && $(focusSel, box)) || $('.c-opt', box);
+    setTimeout(() => f && f.focus({ preventScroll: true }), 60);
   }
-  function closePicker() {
-    if (picker.hidden) return;
-    const wide = mqWide.matches, card = $('#pickerCard'), bg = $('#pickerBg');
-    const done = () => { picker.hidden = true; [card, bg].forEach(el => { if (el.__a) Object.values(el.__a).forEach(a => a.cancel()); el.style.transform = ''; el.style.opacity = ''; }); if (!state.open) unlockScroll(); if (pickerReturn && pickerReturn.focus) pickerReturn.focus({ preventScroll: true }); };
+  function modalClose(box) {
+    if (box.hidden) return;
+    const wide = mqWide.matches, card = $('.picker-card', box), bg = $('.picker-bg', box);
+    const done = () => { box.hidden = true; [card, bg].forEach(el => { if (el.__a) Object.values(el.__a).forEach(a => a.cancel()); el.style.transform = ''; el.style.opacity = ''; }); if (!state.open) unlockScroll(); if (modalReturn && modalReturn.focus) modalReturn.focus({ preventScroll: true }); };
     if (reduce.matches) { done(); return; }
     animateTo(bg, 'o', [{ opacity: 0 }], { duration: 220 });
     animateTo(card, 's', wide ? [{ opacity: 0, transform: 'scale(.97)' }] : [{ transform: 'translateY(100%)' }], { duration: 300, easing: DISMISS });
     setTimeout(done, 310);
   }
+  function openPicker() { renderPicker(); modalOpen(picker, '.c-opt[aria-selected="true"]'); }
+  function closePicker() { modalClose(picker); }
+
   function setCountry(code, opts) {
     opts = opts || {};
     if (!COUNTRY[code]) return;
@@ -1103,22 +1141,56 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
     clearTimeout(toast.t);
     toast.t = setTimeout(() => el.classList.remove('show'), 1800);
   }
-  async function share() {
-    const p = BY_ID[state.open]; if (!p) return;
-    const base = (DATA.siteUrl || (location.origin + location.pathname)).replace(/\/+$/, '');
-    const url = base + '/' + p.id;
-    if (navigator.share && coarse.matches) {
-      try { await navigator.share({ title: p.name, text: L(p.tagline), url }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
-    }
-    try { await navigator.clipboard.writeText(url); toast(T('copied')); }
+  const shareSheet = $('#shareSheet');
+  const ICON = {
+    chat: '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.2c-4 0-7 2.7-7 6.1 0 1.5.6 2.9 1.6 4L4 16.8l3.7-1.4c.7.2 1.5.3 2.3.3 4 0 7-2.7 7-6.3S14 3.2 10 3.2z"/></svg>',
+    plane: '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M17.5 3.3 2.8 9.1l5.1 1.9 1.9 5.2 7.7-12.9z"/><path d="m7.9 11 3.6-3.1"/></svg>',
+    post: '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M8 3.5 6.5 16.5M13.5 3.5 12 16.5M3.8 7.5h13M3.2 12.5h13"/></svg>',
+    sms: '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="2.8" y="4" width="14.4" height="10" rx="3"/><path d="M7 14l-1.5 3 4.5-3"/></svg>',
+    link: '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M8.3 11.7a3.2 3.2 0 0 0 4.5 0l2.6-2.6a3.2 3.2 0 0 0-4.5-4.5l-.9.9"/><path d="M11.7 8.3a3.2 3.2 0 0 0-4.5 0l-2.6 2.6a3.2 3.2 0 0 0 4.5 4.5l.9-.9"/></svg>',
+  };
+  const GO = '<svg class="go flip-rtl" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg>';
+  function shareLink(p) { return (DATA.siteUrl || (location.origin + location.pathname)).replace(/\/+$/, '') + '/' + p.id; }
+  function openShareSheet(p, url) {
+    const text = p.name + ' · ' + L(p.tagline), enc = encodeURIComponent;
+    const opts = [
+      { icon: 'chat', label: 'WhatsApp', href: 'https://wa.me/?text=' + enc(text + '\n' + url) },
+      { icon: 'plane', label: 'Telegram', href: 'https://t.me/share/url?url=' + enc(url) + '&text=' + enc(text) },
+      { icon: 'post', label: 'X', href: 'https://x.com/intent/post?text=' + enc(text) + '&url=' + enc(url) },
+      coarse.matches ? { icon: 'sms', label: T('messages'), href: 'sms:?&body=' + enc(text + ' ' + url) } : null,
+    ].filter(Boolean);
+    $('#shareImg').src = (p.images || [])[0] || '';
+    $('#shareName').textContent = p.name;
+    $('#shareUrl').textContent = url.replace(/^https?:\/\//, '');
+    $('#shareList').innerHTML = opts.map(o => '<li role="none"><a class="c-opt" href="' + esc(o.href) + '" target="_blank" rel="noopener"><span class="si" aria-hidden="true">' + ICON[o.icon] + '</span><span>' + esc(o.label) + '</span>' + GO + '</a></li>').join('') +
+      '<li role="none"><button type="button" class="c-opt" data-copy="' + esc(url) + '"><span class="si" aria-hidden="true">' + ICON.link + '</span><span>' + esc(T('copyLink')) + '</span></button></li>';
+    modalOpen(shareSheet);
+  }
+  async function copyText(url) {
+    try { await navigator.clipboard.writeText(url); return true; }
     catch (e) {
       const ta = document.createElement('textarea'); ta.value = url; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0;top:0';
       document.body.appendChild(ta); ta.select();
       let ok = false; try { ok = document.execCommand('copy'); } catch (err) {}
       ta.remove();
-      toast(ok ? T('copied') : url);
+      return ok;
     }
   }
+  async function share() {
+    const p = BY_ID[state.open]; if (!p) return;
+    const url = shareLink(p);
+    if (navigator.share) {
+      try { await navigator.share({ title: p.name, text: p.name + ' · ' + L(p.tagline), url }); return; }
+      catch (e) { if (e && e.name === 'AbortError') return; }
+    }
+    openShareSheet(p, url);
+  }
+  $('#shareList').addEventListener('click', async e => {
+    const c = e.target.closest('[data-copy]');
+    if (c) { e.preventDefault(); const ok = await copyText(c.dataset.copy); toast(ok ? T('copied') : c.dataset.copy); }
+    if (e.target.closest('.c-opt')) setTimeout(() => modalClose(shareSheet), 120);
+  });
+  $('.picker-bg', shareSheet).addEventListener('click', () => modalClose(shareSheet));
 
   /* ---------- routing ---------- */
   function slugFromUrl() {
@@ -1177,12 +1249,13 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
+      if (!shareSheet.hidden) { modalClose(shareSheet); e.preventDefault(); return; }
       if (!picker.hidden) { closePicker(); e.preventDefault(); return; }
       if (state.open) { requestClose(); e.preventDefault(); }
       return;
     }
     if (e.key === 'Tab') {
-      const box = !picker.hidden ? picker : (state.open ? sheet : null);
+      const box = !shareSheet.hidden ? shareSheet : (!picker.hidden ? picker : (state.open ? sheet : null));
       if (!box) return;
       const f = $$('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])', box).filter(el => !el.closest('[hidden]') && el.offsetParent !== null);
       if (!f.length) return;
@@ -1190,7 +1263,7 @@ html[lang="ar"] .picker-card h2 { font-weight: 700; }
       if (e.shiftKey && (document.activeElement === first || document.activeElement === box)) { last.focus(); e.preventDefault(); }
       else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
     }
-    if (state.open && picker.hidden && (e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !e.target.closest('input, textarea')) {
+    if (state.open && picker.hidden && shareSheet.hidden && (e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !e.target.closest('input, textarea')) {
       const n = gallery.children.length; if (n < 2) return;
       const i = Math.round(Math.abs(gallery.scrollLeft) / gallery.clientWidth);
       const fwd = (e.key === 'ArrowRight') === (root.dir !== 'rtl');
